@@ -1,0 +1,129 @@
+---
+title: "1. Learning to Read (09.10.2025)"
+author: "XXXXXX730"
+date: "2025-10-09"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+  word_document: default
+bibliography: references.bib  
+---
+
+# M1 : Session: Learning to Read
+
+**1. Context (What happened?)**
+
+Today’s session began with an introduction to why R is especially useful for research compared to other statistical software such as Excel. The lecturer emphasized that R is: free, open-source, and transparent, which supports reproducibility and the principles of open science. I contributed an example of how Excel’s automatic date formatting can corrupt datasets and how R’s explicit, traceable syntax avoids such hidden transformations.
+
+The lecturer then demonstrated how R operates as both a calculator and a language of object assignment—for example, `x <- 5` assigns a value to an object that can later be reused. He illustrated the difference between parentheses () (for functions) and square brackets [] (for indexing elements), followed by an example on how to create data frames using `data.frame()`.
+
+```{r}
+12*5
+y <- 12
+x <- 5
+z <- x*y
+mouse.color <- c('green','red','black','white')
+mouse.age <- c(1.2,2.3,2.6,4.7)
+mouse.info <- data.frame(color=mouse.color,age=mouse.age)
+
+mouse.info[,1]
+```
+During the interactive demonstration, several subtle yet revealing lessons emerged:
+
+a. No Undo in R Console: A student asked if unintended commands could be undone using Ctrl + Z. The answer was no.
+
+b. Removing Erroneous Objects: Another peer asked about objects that were accidentally mis-named, such as an example given by the lecturer `drugggg.a <- 12` instead of `drug.a <- 12`. 
+```{r}
+drugggg.a <- 12
+drug.a <- 12
+ls()
+```
+
+The lecturer advised using `rm(objectname)`. I have never had the knowledge of `rm(objectname)` rather than manually deleting items using the brush, cleaning button, in the whole Environment pane and rerunning the whole script again to get the updated objects on feet. It was an Aha moment for me.
+
+```{r}
+rm(drugggg.a)
+ls()
+```
+
+
+c. Anonymisation Reminder: Mention of anonymising assessments triggered me to think ahead about creating an anonymised GitHub repository for my work.
+
+
+d. Semicolon vs Colon (`;` vs `:`): While testing number sequences, I typed 6`;`3 instead of 6`:`3, realising that `:` creates a sequence while `;`
+separates expressions.
+```{r}
+6;3
+6:3
+```
+The output is completely different.
+
+e. Character vs Factor Variables: Using `class(objectname)` revealed how characters appear in quotes while factors display 'levels,' in alphabetical order unless specified. This clarified a previously unnoticed distinction for me.
+
+```{r}
+class(mouse.age)
+class(mouse.color)
+
+temp.mouse.col <- as.factor(mouse.color)
+class(temp.mouse.col)
+temp.mouse.col
+```
+Note the default alphabetical ordering of the colors.
+
+```{r, error=TRUE}
+temp.mouse.col <- as.factor(mouse.color,levels=c('black','white','green','red'))
+
+```
+This went into error as the function `as.factor()` doesnt have the arguemnt level. It is done as follows:
+```{r}
+temp.mouse.col <- factor(mouse.color,levels=c('black','white','green','red'))
+```
+
+
+```{r}
+temp.mouse.col
+```
+
+
+The hands-on teaching style—seeing R operate in real time—helped me connect conceptual understanding to practical coding.
+
+
+**2. Analysis (So what?)**
+
+2.1 The 'no undo' feature initially felt inconvenient, but it led me to appreciate R’s philosophy: each command has consequences. This makes R both powerful and unforgiving. Unlike Excel, R requires the user to think deliberately before execution. I later came to realisation that once a line of code is run—especially if it creates or modifies large objects—its effects are immediate and persist until explicitly removed.
+
+2.2 The discussion about `rm(objectname)` prompted deeper reflection. I asked myself, what if the mistakenly named object is large? Large or duplicated objects can consume extensive memory, potentially slowing or crashing R sessions. Because R uses copy-on-modify semantics, even small changes to a large dataset may temporarily double memory use. Moreover, garbage collection (`gc()`) doesn’t always instantly release memory back to the operating system that is why its sometime necessary to restart the system [@PositSupport2024;@StackOverflow2019]. Therefore, failing to remove or control large objects can lead to 'out-of-memory' errors and system instability  [@RCoreTeam2023].
+```{r}
+gc()
+```
+
+
+2.2.1 Additionally, if a loop or recursive function inadvertently 'self-feeds,' it can run indefinitely and freeze the console—something that can only be stopped manually via the Stop (red) button in RStudio. This lack of automatic reversal forces researchers to practice defensive programming—testing code in small segments, using conditional breaks, and monitoring object sizes via functions like `object.size()`.
+```{r}
+object.size(mouse.info)
+
+```
+
+
+2.3 The reminder on anonymization extended beyond the rubric, I realised that anonymising my analytical identity could also serve as a tool to reduce investigator bias. Just as blinded statistical analyses protect against subjective interpretation, anonymised repositories allow code and results to be judged independently of the analyst’s background or institutional context. This fosters epistemic humility and fairness—qualities central to both rigorous science and ethical data stewardship.
+The nature of anonymized assignment submission prompted me to create an anonymous email and GitHub account dedicated to this module. My plan is to maintain both a text narrative and a fully reproducible R Markdown version of my reflections—combining code, outputs, and commentary. This controlled, transparent workflow mirrors best practices in open-science publication while safeguarding identity, aligning with the module’s ethos of reproducible yet ethical research.
+
+**3. Evaluation (Now what?)**
+
+This session transformed how I view coding—not as a series of commands but as a discipline of accountability. Going forward, I will:
+
+ 3.1 Avoid executing commands directly in the console, instead testing code in scripts for traceability.
+ 
+ 3.2 Use version control (Git) to track and roll back changes rather than relying on 'undo.'
+ 
+ 3.3 Practice memory awareness, routinely checking and cleaning large objects with `rm()` and `gc()`. Restarting the session also another solution that can optimize the memory usage in the future.
+ 
+3.4 Maintain an anonymised GitHub repository early on with mirrored R Markdown reflections, ensuring both open-science compliance and personal data protection.
+
+Overall, I now see that R’s environment demands precision and foresight, cultivating habits essential for scientific reproducibility and computational ethics. What seemed at first like a technical limitation—no undo—became a metaphor for responsible research conduct.
+
+**4. References**
+
+
+
