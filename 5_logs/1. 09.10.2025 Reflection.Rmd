@@ -19,8 +19,8 @@ Today’s session began with an introduction to why R is especially useful for r
 The lecturer then demonstrated how R operates as both a calculator and a language of object assignment—for example, `x <- 5` assigns a value to an object that can later be reused. He illustrated the difference between parentheses () (for functions) and square brackets [] (for indexing elements), followed by an example on how to create data frames using `data.frame()`.
 
 ```{r}
-12*5
-y <- 12
+12*5                                                   # Using R as a calculator
+y <- 12                                                # object assignment                                                                       
 x <- 5
 z <- x*y
 mouse.color <- c('green','red','black','white')

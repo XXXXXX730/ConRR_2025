@@ -1667,9 +1667,9 @@ assigns a value to an object that can later be reused. He illustrated
 the difference between parentheses () (for functions) and square
 brackets [] (for indexing elements), followed by an example on how to
 create data frames using <code>data.frame()</code>.</p>
-<pre class="r"><code>12*5</code></pre>
+<pre class="r"><code>12*5                                                   # Using R as a calculator</code></pre>
 <pre><code>## [1] 60</code></pre>
-<pre class="r"><code>y &lt;- 12
+<pre class="r"><code>y &lt;- 12                                                # object assignment                                                                       
 x &lt;- 5
 z &lt;- x*y
 mouse.color &lt;- c(&#39;green&#39;,&#39;red&#39;,&#39;black&#39;,&#39;white&#39;)
@@ -1765,8 +1765,8 @@ Community 2019)</span>. Therefore, failing to remove or control large
 objects can lead to ‘out-of-memory’ errors and system instability <span class="citation">(R Core Team 2023)</span>.</p>
 <pre class="r"><code>gc()</code></pre>
 <pre><code>##           used (Mb) gc trigger (Mb) max used (Mb)
-## Ncells  612770 32.8    1393320 74.5   890645 47.6
-## Vcells 1146410  8.8    8388608 64.0  1927672 14.8</code></pre>
+## Ncells  612770 32.8    1393342 74.5   890656 47.6
+## Vcells 1146470  8.8    8388608 64.0  1927672 14.8</code></pre>
 <p>2.2.1 Additionally, if a loop or recursive function inadvertently
 ‘self-feeds,’ it can run indefinitely and freeze the console—something
 that can only be stopped manually via the Stop (red) button in RStudio.
