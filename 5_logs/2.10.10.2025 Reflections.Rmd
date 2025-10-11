@@ -1,0 +1,101 @@
+---
+title: "2. Learning to Speak"
+author: "XXXXXX730"
+date: "2025-10-10"
+output: html_document
+---
+#2.M2: Session: Learning to Speak
+
+**1. What happened?**
+
+Today the focus was mainly on us, we were made to work on the session on our own via the pace that suits us with the help of the teaching assistants in the room. But the session began with correction on the previous practical. From all of the questions in the practicals, what stood out as an aha moment for me was the last question's solution.
+
+A. what made it different was that in the solution given to it the lecturer mentioned an important way of thinking while coding - a potential of changing data frame's dimensions in the future should be taken in account 
+
+*Question 5*
+*Find the value of mpg for the final car in the dataset. Can you find multiple ways of doing this?*
+
+```{r}
+dim(mtcars)
+colnames(mtcars)
+mtcars[32,1]
+mtcars$mpg[32]
+mtcars$mpg[length(mtcars$mpg)]
+
+
+
+```
+B. Another important observation I made was the possibility to still call the row by the numerical index even after being renamed by the function `rownames()`. For example, I want to tie it the previous knowledge gene expression related data and how rowname might be important than the sole number used to index the dataset. 
+
+```{r}
+
+```
+
+C. After prompted by another important question from one of the peers about the function `cbind()` I have bee triggered to think of it like different techniques of sewing. parallel `cbind()` vs primary id based which `merge()`.
+
+
+D. Reordering of the data sets colnames when trying to combine two data sets with similar colnames but different rows via the `rbind()`.
+
+
+E. `is.na()` was introduced to locate `NA` values in the merged data sets that doesnt have equal number of rows and columns
+
+F. the function `which()` was also mentioned as a method to locate the TRUE logical value in a set of values. the aim was to discover the location of the values which were `NA`.
+
+
+G. the function `names()` was also briefly mentioned that it could be used in place of `colnames()`.
+
+H. There was an irritating issue of failure to convert variable type to factor and give them levels and labels
+
+I. brief mention of the function `apply()` was also made. the argument of `margin=1` for rows and `margin=2` for columns was briefly mentioned as well.
+
+
+**2. So What?**
+
+Why does this matter? why should we care about potential changes to dataframes now in our code while we know that we can solve the issue at hand now. I feel that data isnt static, I believe make the code that could to certain extend accomodate the future changes in the is a good coding practise
+we will state exaples how this will affect in the future
+
+Lets use this example as used in lecture periodically used datasets may vary continously, forexample:
+
+```{r}
+
+bp <- c(130,120,110,100,150,200)
+date <- c(1,2,3,4,5,6)
+
+dayoneseven <- data.frame(date,bp) 
+dim(dayoneseven)
+dayoneseven[6,2]
+
+
+```
+if the data set is sent over and made to be assesed again, the `dayoneseven[6,2]` doesnt serve as the last blood pressure measurement anymore.
+
+```{r}
+bp.1 <- c(130,120,110,100,150,200,190,170,140)
+date.1 <- c(1,2,3,4,5,6,7,8,9)
+dayonenine <- data.frame(date.1,bp.1)
+dayonenine[6,2]
+```
+by `dayonenine[6,2]` it refers to the last previous measurement rather than the new one. so inoder to create a code that will function for such changes in the number of recordings its better to refer to the varaibles that are believed to capture the changes along the way.
+
+Forexample,
+
+```{r}
+
+# First option:
+dayonenine[dim(dayonenine)[1],2]
+
+# Second option:
+dayonenine$bp.1[length(dayonenine$bp.1)]
+
+```
+
+
+
+**3. What is next?**
+
+In the future I do Plan to think ahead and consider the dynamic nature of data before coding so that it could potentially address possible future changes into account. 
+
+
+
+
+
