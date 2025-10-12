@@ -75,6 +75,26 @@ I. this is were the `merge()` comes in, where a real life data set can be merged
 
 J. Visualization of an `object` or `data.frame` always essential as the defense of any code that crash flow begins from last catch of a working  output.
 
+K. importing dataset using the function `rio::import()` and `here()` in a project worked better for me than `read.csv()` as follows
+
+```{r warning=TRUE, error=TRUE, echo=TRUE}
+neutr <- read.csv('1_data','neutrophils.csv') # first trial of data importing, I did this approach as I confused it with a previoulsy used approach of importing data into R project with the funtions `rio::import()` and `here()`.
+
+neutro <- read.csv('1_data/neutrophils.csv') # corrected way importing when we want to futher organize our project as puting every inmput, script and output could also get messy.
+neutro                # This still fails to open the file as in R mark down during kniting the document it internally changes the working directory therefore the specified directory again gets messed up.
+
+
+neutro.1
+install.packages('pacman')
+
+pacman::p_load(rio, here)
+
+neutro.2 <- rio::import(here('1_data','neutrophils.csv')) # advantageous as it can import data of any sort with the same code and no code adaptation is needed, header identification, and works with R script and R markdown .. not needed reference handbook of epidemiologists
+
+neutr
+
+```
+
 
 **2. So What?**
 
