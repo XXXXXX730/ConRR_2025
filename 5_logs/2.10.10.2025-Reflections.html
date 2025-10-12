@@ -437,7 +437,46 @@ property &lt;- rbind(property,houseG = c(&#39;REF007&#39;,2,&#39;No&#39;))</code
 ## 7 REF007            2          No  REF007</code></pre>
 <p>But in real life do we real need such kind of phenomenon where the
 observation of other variables to be repeatdly placed over the columns
-with actually missing data. I.</p>
+with actually missing data.</p>
+<p>I. this is were the <code>merge()</code> comes in, where a real life
+data set can be merged from <code>data.frames</code> that might contain
+of different observations of different variables of the same
+observation. the merge function doesn’t need specification by which
+unique id or <code>rowname</code> its going to attach the data sets, it
+automatically identifies the common ground for stitching the data. The
+argument <code>all=</code> is essential as it sets the ground for how
+the values missing from both data frames will be handled. if set to
+<code>True</code>, those observations will have a value of
+<code>NA</code> if <code>False</code> then the whole observation with
+the missing value is droped.</p>
+<p>J. Visualization of an <code>object</code> or <code>data.frame</code>
+always essential as the defense of any code that crash flow begins from
+last catch of a working output.</p>
+<p>K. importing dataset using the function <code>rio::import()</code>
+and <code>here()</code> in a project worked better for me than
+<code>read.csv()</code> as follows</p>
+<pre class="r"><code>neutr &lt;- read.csv(&#39;1_data&#39;,&#39;neutrophils.csv&#39;) # first trial of data importing, I did this approach as I confused it with a previoulsy used approach of importing data into R project with the funtions `rio::import()` and `here()`.</code></pre>
+<pre><code>## Warning in file(file, &quot;rt&quot;): cannot open file &#39;1_data&#39;: No such file or
+## directory</code></pre>
+<pre><code>## Error in file(file, &quot;rt&quot;): cannot open the connection</code></pre>
+<pre class="r"><code>neutro &lt;- read.csv(&#39;1_data/neutrophils.csv&#39;) # corrected way importing when we want to futher organize our project as puting every inmput, script and output could also get messy.</code></pre>
+<pre><code>## Warning in file(file, &quot;rt&quot;): cannot open file &#39;1_data/neutrophils.csv&#39;: No such
+## file or directory</code></pre>
+<pre><code>## Error in file(file, &quot;rt&quot;): cannot open the connection</code></pre>
+<pre class="r"><code>neutro                # This still fails to open the file as in R mark down during kniting the document it internally changes the working directory therefore the specified directory again gets messed up.</code></pre>
+<pre><code>## Error: object &#39;neutro&#39; not found</code></pre>
+<pre class="r"><code>neutro.1</code></pre>
+<pre><code>## Error: object &#39;neutro.1&#39; not found</code></pre>
+<pre class="r"><code>install.packages(&#39;pacman&#39;)</code></pre>
+<pre><code>## Installing package into &#39;C:/Users/tekle/AppData/Local/R/win-library/4.5&#39;
+## (as &#39;lib&#39; is unspecified)</code></pre>
+<pre><code>## Error in contrib.url(repos, &quot;source&quot;): trying to use CRAN without setting a mirror</code></pre>
+<pre class="r"><code>pacman::p_load(rio, here)
+
+neutro.2 &lt;- rio::import(here(&#39;1_data&#39;,&#39;neutrophils.csv&#39;)) # advantageous as it can import data of any sort with the same code and no code adaptation is needed, header identification, and works with R script and R markdown .. not needed reference handbook of epidemiologists
+
+neutr</code></pre>
+<pre><code>## Error: object &#39;neutr&#39; not found</code></pre>
 <p><strong>2. So What?</strong></p>
 <p>Why does this matter? why should we care about potential changes to
 dataframes now in our code while we know that we can solve the issue at

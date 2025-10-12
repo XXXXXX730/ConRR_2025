@@ -71,7 +71,7 @@ property
 ```
 But in real life do we real need such kind of phenomenon where the observation of other variables to be repeatdly placed over the columns with actually missing data.
 
-I. this is were the `merge()` comes in, where a real life data set can be merged from `data.frames` that might contain of different observations of different variables of the same observation. the merge function doesn't need specification by which unique id or `rowname` its going to attach the data sets, it automatically identifies the common ground for stitching the data. The argument `all=` is essential as it sets the ground for how the values missing from both data frames will be handled. if set to `True`, those observations will have a value of `NA` if `False` then the whole observation with the missing value is doped.
+I. this is were the `merge()` comes in, where a real life data set can be merged from `data.frames` that might contain of different observations of different variables of the same observation. the merge function doesn't need specification by which unique id or `rowname` its going to attach the data sets, it automatically identifies the common ground for stitching the data. The argument `all=` is essential as it sets the ground for how the values missing from both data frames will be handled. if set to `True`, those observations will have a value of `NA` if `False` then the whole observation with the missing value is droped.
 
 J. Visualization of an `object` or `data.frame` always essential as the defense of any code that crash flow begins from last catch of a working  output.
 

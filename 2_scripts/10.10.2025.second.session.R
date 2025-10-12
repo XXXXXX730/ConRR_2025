@@ -130,11 +130,89 @@ merge(property.partA, property.partB, all=T, )
 
 ?merge
 
-merge(property.partA, property.partB, by = 'id', all=F)
+merge(property.partA, property.partB, all.y = T)
+
+# Projects
+
+read.csv('1_data/neutrophils.csv')
+
+# the best way to import data is using the project package management system known as the `pacman()`
+
+pacman::p_load(here,rio)
+
+neutro <- rio::import(here('1_data','neutrophils.csv'))
+
+
+neutro <- read.csv(file.path('1_data/neutrophils.csv'), header = F)
+neutro
+
+
+colnames(neutro) <- c("TypeA", "TypeB", "TypeC", "TypeD")
+
+head(neutro,10)
+tail(neutro,10)
+
+dim(neutro)
+
+
+summary(neutro)
+
+
+neutro[,1]
+
+sum(neutro[,1])
+
+neutro[,2]
+sum(neutro[,2], na.rm = T)
+
+colSums(neutro)
+
+
+colSums(neutro, na.rm = T)
+
+mean(neutro$TypeD, na.rm = T) 
+
+sd(neutro$TypeD, na.rm = T)
+
+
+#Practical session 1
 
 
 
+films <- read.csv('1_data/films.csv')
 
+# Question 1
+# Download the file films_2.csv from Moodle, and create an object called films that contains the data from this file.
+# 
+
+# Question 2
+# (2a) Find out how many rows and columns there are. (2b) What are the column names?
+#   
+dim(films)
+colnames(films)
+#   Question 3
+# Find the number of votes for elements 35 to 70 in the dataset.
+films[35:70,'numVotes']
+# 
+# Question 4
+# What is the class of the column numVotes?
+#   
+class(films$numVotes)
+#   Question 5
+# Using the sum and length function, find the mean number of votes across all entries. Does this agree with the answer that you get with the mean function?
+#   
+mean.votes.0 <- sum(films$numVotes)/length(films$numVotes)
+
+mean.votes.1 <- mean(films$numVotes)
+mean.votes.0==mean.votes.1
+
+#   Question 6
+# Find the mean of each numeric column – average rating, number of votes and start year.
+# 
+# 
+mean(films$numVotes)
+mean(films$averageRating)
+mean(films$startYear)
 
 
 
