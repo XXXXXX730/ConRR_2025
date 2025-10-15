@@ -78,20 +78,54 @@ J. Visualization of an `object` or `data.frame` always essential as the defense 
 K. importing dataset using the function `rio::import()` and `here()` in a project worked better for me than `read.csv()` as follows
 
 ```{r warning=TRUE, error=TRUE, echo=TRUE}
-neutr <- read.csv('1_data','neutrophils.csv') # first trial of data importing, I did this approach as I confused it with a previoulsy used approach of importing data into R project with the funtions `rio::import()` and `here()`.
+neutr.0 <- read.csv('1_data','neutrophils.csv') # first trial of data importing, I did this approach as I confused it with a previoulsy used approach of importing data into R project with the funtions `rio::import()` and `here()`.
+neutro
 
-neutro <- read.csv('1_data/neutrophils.csv') # corrected way importing when we want to futher organize our project as puting every inmput, script and output could also get messy.
+
+neutro <- read.csv('neutrophils.csv') # corrected way importing when we want to futher organize our project as puting every inmput, script and output could also get messy.
 neutro                # This still fails to open the file as in R mark down during kniting the document it internally changes the working directory therefore the specified directory again gets messed up.
 
 
-neutro.1
 install.packages('pacman')
 
 pacman::p_load(rio, here)
 
-neutro.2 <- rio::import(here('1_data','neutrophils.csv')) # advantageous as it can import data of any sort with the same code and no code adaptation is needed, header identification, and works with R script and R markdown .. not needed reference handbook of epidemiologists
+neutro.1 <- rio::import(here('1_data','neutrophils.csv')) # advantageous as it can import data of any sort with the same code and no code adaptation is needed, header identification, and works with R script and R markdown .. not needed reference handbook of epidemiologists
 
-neutr
+neutro.1
+
+```
+strange enough to find the fact that I cant import data set in R markdown using `read.csv()` while the same command can be executed in R script. the `rio::import/export()` doesnt have any issue with both script and R mark down. From the discussion I further looked where this rio() package is situated and it neither `tidyverse` nor `baseR`. It a package that calls functions from these packages to import and export variety of data.
+
+
+I. when you run `sum()`, `mean()`, `sd()`, `median()`, R will yeild by NA as in the following example
+```{r}
+blood_glucose <- c(5.4, 6.2, NA, 5.9)
+mean(blood_glucose)
+
+mean(blood_glucose, na.rm=T)
+```
+This cautionary and consual message when you compute a estimate its on your call to ignore the missing values, R wont make that decision, contributing to open and transparent science. as whats next it better not to call `na.rm()` atleast initially it could help to put a break thereby more appreciation of the process of dealing with missing values
+
+J. Another important discussion point that got us intrigued during the conversion of the data class was how do we know which label is given to the values in the following example
+```{r}
+mtcars$am <- factor(mtcars$am, levels = c(0,1), labels = c('auto', 'manual')) 
+
+mtcars
+
+
+```
+It was simply taken to be 0 corresponds to the auto and 1 corresponds to manual because the funtion assumes ordering in increasing numerically or alphabetically order by defualt unless otherwise specified.
+
+
+I. the function plots figure out put depends on the class of the input - I accidentally wrote the categorical variable with the intention to draw a scatter plot but it turned out to be a boxplot.
+
+```{r echo=TRUE}
+
+mtcars$cyl <- factor(mtcars$cyl)
+plot(mpg~cyl, data = mtcars)
+
+plot(mpg~disp, data = mtcars)
 
 ```
 

@@ -215,6 +215,132 @@ mean(films$averageRating)
 mean(films$startYear)
 
 
+#chapter 4 summarizing the data=================================================
+
+
+head(mtcars)
+tail(mtcars,30)
+
+summary(mtcars)
+
+class(mtcars$cyl)
+
+mtcars$cyl[5]+1
+
+
+mtcars$cyl <- factor(mtcars$cyl)
+
+class(mtcars$cyl)
+
+
+
+mtcars$cyl[5]+1
+
+mtcars$am <- factor(mtcars$am, labels = c('auto', 'manual')) 
+
+
+
+#4.2 Graphical Summaries========================================================
+
+
+boxplot(mpg~cyl, data = mtcars)
+
+
+boxplot(mpg~cyl*am, data= mtcars)
+
+
+levels(mtcars$cyl)
+
+
+levels(mtcars$am)
+
+mtcars$cyl <- factor(mtcars$cyl, levels = c('4','6','8')) # once the function factor is called, it creates levels by increasing order numerically or alphabetically
+# unless otherwise specified
+
+
+
+hist(mtcars$mpg, breaks = 20)
+
+plot(mpg~cyl, data = mtcars)
+
+plot(mpg~dip, data = mtcars)
+
+
+pairs(~mpg+disp+vs, data = mtcars)
+
+
+
+# 4.3 Table based summaries=====================================================
+
+
+xtabs(~am, data=mtcars)
+
+
+xtabs(~am+cyl, data=mtcars)
+
+
+prop.table(xtabs(~am, data=mtcars))
+
+
+
+prop.table(xtabs(~am+cyl, data=mtcars), margin = 2)
+
+prop.table(xtabs(~am+cyl, data=mtcars), margin = 1)
+
+
+aggregate(mpg~am, data= mtcars, mean)
+
+aggregate(mpg~am+cyl, data= mtcars, mean)
+
+aggregate(cbind(mpg,disp) ~ am+cyl, data= mtcars, mean)
+
+# 
+# Practical 2: Summarising data
+# We will work with the ToothGrowth dataset, which details tooth length (len) in 60 guinea pigs. 
+# Each guinea pig received one of three doses of vitamin C (dose), administered using one of two supplement types (supp). 
+# Use the command ToothGrowth to see the data in R, and ?ToothGrowth to read more about the dataset.
+# 
+# Question 1
+# How many guinea pigs received each dose?
+#   
+xtabs(~dose, data = ToothGrowth)
+
+#   How many received each supplement type?
+
+xtabs(~supp, data = ToothGrowth)
+#   
+#   How many received each combination of dose and supplement type?
+
+xtabs(~supp+dose, data = ToothGrowth)
+#   
+#   Question 2
+# What proportion of total guinea pigs received each combination of dose and supplement type?
+#   
+prop.table(xtabs(~supp+dose, data = ToothGrowth))
+#   Question 3
+# What was the maximum tooth length recorded for each dose?
+#   
+aggregate(len~dose, data = ToothGrowth, max)
+#   For each combination of dose and supplement type, what is the sum of all tooth lengths?
+#   
+aggregate(len~dose+supp, data = ToothGrowth, sum)
+#   Question 4
+# Draw a boxplot of tooth length for each dose of vitamin C.
+#
+
+boxplot(len~dose, data = ToothGrowth)
+# Draw a boxplot of tooth length for each combination of dose and supplement type, with the first two boxplots showing dose 0.5, the following two boxplots showing dose 1.0 and the final two plots showing dose 2.0.
+# 
+
+ToothGrowth$dose <- factor(ToothGrowth$dose)
+boxplot(len~supp*dose, data = ToothGrowth)
+# Question 5
+# Create a histogram of tooth length, containing more than 10 columns or “breaks”.
+
+hist(ToothGrowth$len, breaks = 15)
+
+
+
 
 
 
