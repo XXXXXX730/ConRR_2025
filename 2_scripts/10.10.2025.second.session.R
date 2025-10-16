@@ -341,18 +341,200 @@ hist(ToothGrowth$len, breaks = 15)
 
 
 
+# Chapter 5 - Subsetting and Filtering data-------------------------------------
+
+a <- 101:110
+
+# calling elemets
+
+# continous elemets
+
+a[4:7]
+
+
+
+# separate elements or discontinuous set of elements
+
+a[c(3,7,8)]
+
+
+# You can also call the elements using named objects instead of indices
+
+b <- 5
+
+a[b]
+
+c <- c(2,6,8)
+a[c]
+
+
+# The object that we to call inside another object must contain elements that are indices of the of the object from which we are calling elements
 
 
 
 
 
+# Logical test and the `which()` command
+
+property <- data.frame(
+  id=c("REF001", "REF002", "REF003", "REF004", "REF005", "REF006"),
+  house.prices=c(100, 200, 1000, 50, 500, 500),
+  no.bedrooms=c(1, 2, 5, 1, 3, 2),
+  parking=c("Yes", "Yes", "Yes", "No", "Yes", "Yes"),
+  type=c("terrace", "terrace", "detached", "flat", "detached", "detached"),
+  bathrooms=c(1, 1, 3, 1, 2, 2),
+  city.centre=c("No", "No", "Yes", "No", "Yes", "No")
+)
+
+rownames(property) <- c("houseA","houseB","houseC","houseD","houseE","houseF")
+
+
+property
+
+
+# Which house prices are exactly equal to 500?
+
+
+property$house.prices == 500
+which(property$house.prices == 500)
+
+# difference between == and =. `=` is <-  while == is logical indicator
+# Now ask R if the house prices are greater than 300:
+
+
+
+which(property$house.prices > 300)
+
+
+# NB the values that are displayed after the command which are the ones that indicate the location of the value rather than the value itself
+
+
+
+# how do we find these values exactl:
+# I think once we have the indices from which() or simply ==, we can call them using the []
+
+property$house.prices[which(property$house.prices > 300)]
+
+
+# using the method above find the expensive houses' price, price >300
+
+
+expensive.house <- property$house.prices > 300
+
+property$house.prices[which(expensive.house)]
+
+
+# R also runs the logical outputs
+
+
+property$house.prices  > 300
+
+property$house.prices[c(FALSE, FALSE,  TRUE, FALSE,  TRUE,  TRUE)] # I would emphasis on the usage of the [] vs () very well
+
+
+# so from this we could also learn that we can also skip the whicj
+
+
+property$house.prices[property$house.prices > 300]
+
+
+# Either way we asking R two things by doing this, what are the location of the elemets greater than 300 and what the values of these elemets
 
 
 
 
+property[c(TRUE, FALSE, FALSE, FALSE, FALSE, TRUE), ] # on the basis what premise does R remeber the logicals are we not specifying one
+
+
+# It turns out like mentioned priorly in the early sessions the logical is used as a steping stone in subsetting
+
+# when we put TRUE or False we are telling which rows or columns we are interested in
+
+
+# the `subset()` function:
+# it uses two arguements, ie the data set and the condition upon which its going to select the subset of data
+
+
+subset(x = property, house.prices > 300)
+
+# its also possible to subset over multiple conditions
+
+subset(x = property,subset = house.prices>300 & no.bedrooms>=3, select = c('id','type','city.centre'))
+
+# we can also remeber to 
+
+# Practical 3--------------------------------------------------------------------
+
+
+films <- read.csv('1_data/films.csv', header = T) 
+
+# 
+# Question 1
+# Change the column name originalTitle to a new name, Title. A good place to start is to find out which column is named originalTitle.
+
+
+title <- which(colnames(films)=='originalTitle')
+
+
+colnames(films)[title] <- 'Title'
+
+# Question 2
+# Overwrite the current dataset with a new dataset containing the following 
+# columns only: tconst, averageRating, numVotes, titleType, primaryTitle, startYear, genres.
+
+selected.variables <- c('tconst', 'averageRating', 'numVotes', 'titleType', 
+                        'primaryTitle', 'startYear', 'genres')
+
+films <- films[,selected.variables]
+
+# 
+# Question 3
+# Obtain a summary of the dataset, and note the different ways in which different types of data are summarised.
+
+summary(films)
+# 
+# Question 4a
+# Use the command unique() to find out what are the three kinds of titleType in the dataset.
+
+unique(films$titleType)
+
+# 
+# Question 4b
+# For each kind, obtain summary data of average ratings.
+
+films$titleType <- factor(films$titleType)
+
+
+xtabs(~titleType, data = films)
+
+prop.table(xtabs(~titleType, data = films))
+
+hist(x = films$averageRating, breaks = 10)
+
+boxplot(averageRating~titleType, data = films)
+
+aggregate(averageRating ~ titleType, data = films, FUN = mean)
+
+aggregate(averageRating ~ titleType, data = films, FUN = sd)
+# 
+# Question 5
+# Create a smaller dataset containing only entries of the type “movie”. Call this smaller dataset movies.only
+
+
+movie.only <- subset(x = films, subset= titleType == 'movie' )
+# 
+# Question 6
+# Create a further subset of movies.only, containing only movies with average 
+# rating greater than 7.5 AND with number of votes greater than 100; how big is this dataset?
+# 
+
+good.movies <- subset(x = movie.only, subset = averageRating > 7.5 & numVotes > 100) 
+
+dim(good.movies)
 
 
 
+# 
 
 
 
