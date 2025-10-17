@@ -1,0 +1,12 @@
+---
+title: "Learning to write and draw"
+author: "XXXXXXX730"
+date: "2025-10-17"
+output: html_document
+---
+
+#2.M2: Session: Learning to Speak
+
+**1. What happened?**
+
+Regular day like 
